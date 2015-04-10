@@ -1,0 +1,14 @@
+{
+    "name": "micschk/silverstripe-latlongfield",
+    "description": "Stand-alone latlong field, abstracted from mappable or a comparable module",
+    "type": "silverstripe-module",
+    "keywords": ["silverstripe", "mappable", "geocoding"],
+    "authors": [
+    {
+        "name": "micschk"
+    }],
+	"extra": {
+		"installer-name": "latlongfield"
+	}
+    
+}

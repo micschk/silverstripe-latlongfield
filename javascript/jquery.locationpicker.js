@@ -164,7 +164,10 @@
                 }
                 
                 function findAddress(){
-                    var address = $(that).val();
+                    //var address = $(that).val();
+					var address = $('#Form_ItemEditForm_StreetAddress').val()
+						+ ' ' + $('#Form_ItemEditForm_Postcode').val()
+						+ ' ' + $('#Form_ItemEditForm_City').val();
                     if(address == ""){
                         alert("Please enter an address or Lng/Lat position.");
                     }else{

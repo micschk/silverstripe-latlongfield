@@ -9,7 +9,6 @@ class LatLongField extends TextField {
 	}
 
 	public function FieldHolder() {
-		Requirements::javascript('http://maps.google.com/maps/api/js?sensor=false');
 		
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::css(THIRDPARTY_DIR . '/jquery-ui-themes/smoothness/jquery-ui.css');

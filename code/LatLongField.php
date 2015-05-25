@@ -39,4 +39,36 @@ class LatLongField extends TextField {
 		$this->js_input_selector = $val;
 	}
 	
+	
+	/*
+	 * Calculate the distance between two geo coordinates in KM
+	 */
+	public static function calCulateDistance($fromcoordinate, $tocoordinate, $decimals=0){
+		// Create procedure if not exists;
+		$exists = DB::query("SELECT IF( 
+			EXISTS (
+				SELECT 1 FROM Information_schema.Routines
+				WHERE SPECIFIC_NAME = 'calc_distance' 
+				AND ROUTINE_TYPE='FUNCTION'
+				), 
+			'function exists', 'not found')");
+//		Debug::dump($exists->numRecords( ));
+		if(array_shift( $exists->first() ) == 'not found'){
+			Debug::dump('DEFINING');
+			DB::query("CREATE FUNCTION calc_distance 
+					(lat1 DECIMAL(10,6), long1 DECIMAL(10,6), lat2 DECIMAL(10,6), long2 DECIMAL(10,6))
+					RETURNS DECIMAL(10,6)
+					RETURN (6353 * 2 * ASIN(SQRT( 
+							POWER(SIN((lat1 - abs(lat2)) * pi()/180 / 2),2) + COS(lat1 * pi()/180 ) 
+							* COS( abs(lat2) *  pi()/180) * POWER(SIN((long1 - long2) *  pi()/180 / 2), $decimals) 
+						)))");
+		}
+		$query_result = DB::query("SELECT ROUND(calc_distance($fromcoordinate,$tocoordinate), 0)");
+		$result = array_shift( $query_result->first() );
+//		Debug::dump("Distance between Eiffel Tower (48.858278,2.294254) and Big Ben (51.500705,-0.124575)
+//			".DB::query("SELECT ROUND(calc_distance(51.500705,-0.124575,48.858278,2.294254), 2)")." KM");
+		//Debug::dump("Distance Eiffel Tower (48.858278,2.294254) - Big Ben (51.500705,-0.124575): $result KM");
+		return $result;
+	}
+	
 }

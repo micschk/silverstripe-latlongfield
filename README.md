@@ -1,4 +1,4 @@
-Simple Silverstripe Latlong Field
+Archived: use restruct/silverstripe-latlongfield instead
 =================================
 
 CMS editor can type street address, then click search. A (draggable) pointer will be shown on a map and the field's content will be replaced with the LatLong code.
